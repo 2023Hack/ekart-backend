@@ -14,7 +14,7 @@ import cors from "cors";
 dotenv.config();
 
 //databse config
-connectDB();
+// connectDB();  -- merged with app.listen
 
 //esmodule fix
 // const __filename = fileURLToPath(import.meta.url);
@@ -46,9 +46,11 @@ app.use("/api/v1/product", productRoutes);
 const PORT = process.env.PORT || 8080;
 
 //run listen
-app.listen(PORT, () => {
-  console.log(
-    `Server Running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan
-      .white
-  );
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(
+      `Server Running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan
+        .white
+    );
+  });
 });
